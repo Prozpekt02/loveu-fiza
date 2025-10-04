@@ -1,175 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Our First Anniversary ❤️</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our First Anniversary</title>
   <style>
-    :root{
-      --bg:#FFF6F9;
-      --card:#ffffff;
-      --accent:#ff6b9a;
-      --muted:#7a7a7a;
-      --glass: rgba(255,255,255,0.6);
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #fff;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-      background: radial-gradient(circle at 10% 10%, #fff1f6 0%, var(--bg) 30%), linear-gradient(180deg,#ffeef6 0%, #fff6f9 100%);
-      color:#222; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-      min-height:100vh; display:flex; align-items:center; justify-content:center; padding:30px;
+    h1, h2 {
+      margin: 20px 0;
     }
-    .stage{width:100%; max-width:980px}
-    header{display:flex; gap:20px; align-items:center}
-    .title{
-      background:linear-gradient(90deg,var(--accent),#ffb3d1); -webkit-background-clip:text; background-clip:text;
-      -webkit-text-fill-color:transparent; font-size:34px; font-weight:700; margin:0
+    .photo-section {
+      margin: 40px 0;
     }
-    .subtitle{color:var(--muted); margin:0}
-
-    .card{background:var(--card); border-radius:20px; padding:26px; margin-top:18px; box-shadow:0 8px 30px rgba(250,120,160,0.12); backdrop-filter: blur(6px);}
-
-    .grid{display:grid; grid-template-columns: 1fr 380px; gap:20px}
-
-    .left{padding:8px}
-    .right{display:flex; flex-direction:column; gap:16px}
-
-    .photo-slot{position:relative; border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#fff,#fff8fb); border:1px solid rgba(255,120,150,0.08); min-height:220px; display:flex; align-items:center; justify-content:center; flex-direction:column;}
-    .photo-slot img{width:100%; height:100%; object-fit:cover; display:block}
-    .photo-caption{position:absolute; left:12px; bottom:12px; background:var(--glass); padding:8px 12px; border-radius:999px; font-weight:600}
-
-    .controls{display:flex; gap:8px; flex-wrap:wrap}
-    .controls input[type=file]{display:none}
-    .btn{padding:10px 12px; border-radius:10px; border:0; cursor:pointer; font-weight:600}
-    .btn-pick{background:#fff; box-shadow:0 4px 14px rgba(0,0,0,0.06)}
-    .btn-action{background:linear-gradient(90deg,var(--accent),#ff8fb1); color:white}
-
-    .memories{display:grid; grid-template-columns: repeat(2,1fr); gap:12px}
-    .mem-card{padding:12px; border-radius:12px; background:linear-gradient(180deg,#fff,#fffafc); min-height:92px; display:flex; flex-direction:column; justify-content:center}
-
-    .reveal{margin-top:10px; padding:18px; border-radius:12px; background:linear-gradient(90deg,#fff7fb,#fff9f9); text-align:center}
-    .reveal .message{font-size:18px; font-weight:700; margin-bottom:10px}
-    .small{color:var(--muted); font-size:13px}
-
-    footer{margin-top:16px; text-align:center; color:var(--muted); font-size:13px}
-
-    /* heart animation */
-    .hearts{position:fixed; inset:0; pointer-events:none}
-    .heart{position:absolute; width:16px; height:16px; transform:translate(-50%,-50%); opacity:0;}
-    .heart:before,.heart:after{content:""; position:absolute; width:10px; height:16px; background:var(--accent); border-radius:10px 10px 0 0}
-    .heart:before{left:6px; transform:rotate(-45deg)}
-    .heart:after{left:-0px; transform:rotate(45deg)}
-
-    @media (max-width:880px){.grid{grid-template-columns:1fr;}.right{order:2}.left{order:1}}
+    .photo-section img {
+      width: 300px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      margin-top: 15px;
+    }
+    .reveal-message {
+      font-size: 1.5em;
+      margin: 30px auto;
+      max-width: 600px;
+      line-height: 1.6em;
+      display: none;
+    }
+    button {
+      background: #fff;
+      color: #ee9ca7;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 25px;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.3s;
+    }
+    button:hover {
+      transform: scale(1.1);
+    }
+    #hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 999;
+    }
+    .heart {
+      position: absolute;
+      color: red;
+      font-size: 20px;
+      animation: floatUp 5s linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(1); opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+    }
   </style>
 </head>
 <body>
-  <div class="hearts" id="hearts"></div>
-  <div class="stage">
-    <header>
-      <div>
-        <h1 class="title">Happy 1st Anniversary ❤️</h1>
-        <p class="subtitle">A little gift for us — with our moments together</p>
-      </div>
-      <div style="margin-left:auto">
-        <button class="btn btn-action" id="playBtn">Play Song ▶</button>
-      </div>
-    </header>
+  <h1>💖 Happy First Anniversary 💖</h1>
 
-    <div class="card">
-      <div class="grid">
-        <div class="left">
-          <div class="photo-slot">
-            <img src="bdb6d7fd-67b7-4c18-8405-96443f81d110.jpg" alt="Our First Meet">
-            <div class="photo-caption">Our First Meet</div>
-          </div>
-
-          <div style="height:12px"></div>
-
-          <div class="photo-slot">
-            <img src="fb335fd8-b025-4277-9d40-ccd0687c0a23.jpg" alt="Best Memory">
-            <div class="photo-caption">Best Memory</div>
-          </div>
-
-          <div style="height:12px"></div>
-
-          <div class="memories">
-            <div class="mem-card">
-              <div style="font-weight:700">Forever Us</div>
-              <div class="small">A space where our love keeps growing 💕</div>
-            </div>
-            <div class="mem-card">
-              <div style="font-weight:700">To Many More</div>
-              <div class="small">Our journey has just begun ✨</div>
-            </div>
-          </div>
-
-          <div style="height:12px"></div>
-
-          <div class="reveal">
-            <div class="message" id="typeWriter">Click "Reveal" for a surprise</div>
-            <div><button class="btn btn-action" id="revealBtn">Reveal ♥</button> <button class="btn btn-pick" id="confettiBtn">Confetti</button></div>
-          </div>
-        </div>
-
-        <div class="right">
-          <div style="font-weight:700">You are my always & forever 💖</div>
-          <p class="small">From our very first meet till now, you’ve been my happiest memory and my future dream. I love you endlessly.</p>
-        </div>
-      </div>
-
-      <footer>Made with ♥ for our 1st anniversary</footer>
-    </div>
+  <div class="photo-section">
+    <h2>Our First Meet</h2>
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD...<TRUNCATED_BASE64_1>" alt="Our First Meet">
   </div>
 
-  <audio id="bgAudio" loop preload="auto">
+  <div class="photo-section">
+    <h2>Forever Us</h2>
+    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD...<TRUNCATED_BASE64_2>" alt="Forever Us">
+  </div>
+
+  <button onclick="revealLove()">Reveal ♥</button>
+  <button onclick="toggleMusic()">Play/Pause Music 🎶</button>
+
+  <p class="reveal-message" id="loveMessage">From our first meet to today, every moment with you has been magical. Here’s to forever, together. 💕</p>
+
+  <div id="hearts"></div>
+
+  <audio id="bgMusic" loop>
     <source src="romantic.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    const bgAudio = document.getElementById('bgAudio');
-    const playBtn = document.getElementById('playBtn');
-    playBtn.addEventListener('click', ()=>{
-      if(bgAudio.paused){ bgAudio.play(); playBtn.textContent='Pause ❚❚' } else { bgAudio.pause(); playBtn.textContent='Play Song ▶' }
-    });
-
-    const revealBtn = document.getElementById('revealBtn');
-    const typeWriter = document.getElementById('typeWriter');
-    const messages = [
-      "One year down, forever to go. I love you ❤️",
-      "You’re my best memory and my favorite future ✨",
-      "Happy 1st Anniversary to us 💕"
-    ];
-    let idx=0;
-    function typeText(text, el, cb){ el.textContent=''; let i=0; const t = setInterval(()=>{ el.textContent += text[i++]||''; if(i>text.length){ clearInterval(t); if(cb) cb(); } }, 35) }
-    revealBtn.addEventListener('click', ()=>{
-      typeText(messages[idx%messages.length], typeWriter); idx++;
-      spawnBurst();
-    });
-
-    function rand(min,max){return Math.random()*(max-min)+min}
-    const heartsEl = document.getElementById('hearts');
-    function spawnHeart(x,y){
-      const el = document.createElement('div'); el.className='heart'; heartsEl.appendChild(el);
-      el.style.left = x + 'px'; el.style.top = y + 'px';
-      el.style.opacity=1; el.style.transform='translate(-50%,-50%) scale(0.8)';
-      const dur = rand(1800,3000);
-      el.animate([
-        {transform:'translate(-50%,-50%) scale(0.8) translateY(0px)', opacity:1},
-        {transform:`translate(-50%,-50%) scale(1.6) translateY(-120px)`, opacity:0}
-      ], {duration:dur, easing:'cubic-bezier(.2,.8,.2,1)'});
-      setTimeout(()=> el.remove(), dur+50)
+    function revealLove() {
+      document.getElementById('loveMessage').style.display = 'block';
+      createHearts();
     }
-    function spawnBurst(){
-      for(let i=0;i<14;i++){
-        const x = window.innerWidth/2 + rand(-180,180);
-        const y = window.innerHeight/2 + rand(-60,60);
-        setTimeout(()=> spawnHeart(x,y), i*40);
+
+    function toggleMusic() {
+      let music = document.getElementById('bgMusic');
+      if (music.paused) music.play(); else music.pause();
+    }
+
+    function createHearts() {
+      const hearts = document.getElementById('hearts');
+      for (let i = 0; i < 20; i++) {
+        let heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+        heart.innerText = '❤';
+        hearts.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
       }
     }
-    document.getElementById('confettiBtn').addEventListener('click', spawnBurst);
-
-    setTimeout(spawnBurst, 1200);
   </script>
+
 </body>
 </html>
