@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sorry Fiza — Interactive Card</title>
+  <style>
+    :root{--bg:#0f172a;--card:#0b1220;--accent:#ff6b6b;--soft:#94a3b8}
+    *{box-sizing:border-box;font-family:Inter,system-ui,Arial;margin:0}
+    html,body{height:100%;background:linear-gradient(180deg,var(--bg) 0%, #071226 100%);color:#e6eef8}
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .card{width:100%;max-width:760px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:18px;padding:28px;box-shadow:0 10px 30px rgba(2,6,23,0.6);position:relative;overflow:hidden}
+    header{display:flex;gap:16px;align-items:center}
+    .logo{width:62px;height:62px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#fca5a5);display:flex;align-items:center;justify-content:center;font-weight:700}
+    h1{font-size:20px;margin-bottom:6px}
+    p.lead{color:var(--soft);margin-bottom:14px}
+
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
+    @media (max-width:880px){.grid{grid-template-columns:1fr;}.preview{order:-1}}
+
+    .compose{background:rgba(255,255,255,0.02);padding:16px;border-radius:12px}
+    label{display:block;font-size:13px;color:var(--soft);margin-bottom:6px}
+    input[type=text],textarea{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit;outline:none}
+    textarea{min-height:120px;resize:vertical}
+    .row{display:flex;gap:10px;margin-top:12px}
+    button{cursor:pointer;border:0;padding:10px 12px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#ff8fab);color:#061421;font-weight:700}
+    .muted{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--soft)}
+
+    .preview{padding:22px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+    .card-face{width:100%;height:260px;border-radius:12px;background:linear-gradient(180deg,#071733 0%, #08263b 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;position:relative}
+    .typewriter{font-size:20px;text-align:center;max-width:90%}
+    .heart{font-size:44px;color:var(--accent);opacity:0;transform:scale(.6);transition:all .45s ease}
+
+    .small{font-size:12px;color:var(--soft)}
+    .actions{display:flex;gap:8px}
+
+    #confetti{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
+
+    footer{margin-top:14px;text-align:center;color:var(--soft);font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="application">
+      <header>
+        <div class="logo">❤</div>
+        <div>
+          <h1>Fiza, I’m Sorry</h1>
+          <p class="lead">Press <strong>Send Love</strong> to see your little message come alive with hearts and confetti.</p>
+        </div>
+      </header>
+
+      <div class="grid" style="margin-top:18px">
+        <div class="compose">
+          <label for="to">To</label>
+          <input id="to" type="text" value="Fiza" readonly>
+
+          <label style="margin-top:10px" for="msg">Message</label>
+          <textarea id="msg" readonly>Fiza, I’m truly sorry for all the past mistakes. I know I hurt you, and I never want to repeat that. I miss you and I hope you can forgive me.</textarea>
+
+          <div class="row">
+            <button id="send">Send Love</button>
+          </div>
+        </div>
+
+        <div class="preview">
+          <div class="card-face" id="face">
+            <canvas id="confetti"></canvas>
+            <div style="z-index:2">
+              <div class="typewriter" id="tw">Hey Fiza —</div>
+              <div class="heart" id="heart">❤</div>
+            </div>
+          </div>
+          <div style="width:100%;display:flex;justify-content:space-between;align-items:center">
+            <div class="small">Preview</div>
+          </div>
+        </div>
+      </div>
+      <footer>Sent with love and honesty ❤️</footer>
+    </div>
+  </div>
+
+  <script>
+    const tw = document.getElementById('tw');
+    const heart = document.getElementById('heart');
+    const sendBtn = document.getElementById('send');
+    const canvas = document.getElementById('confetti');
+    const cctx = canvas.getContext('2d');
+    function resizeCanvas(){canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight}
+    window.addEventListener('resize', resizeCanvas); resizeCanvas();
+
+    function random(min,max){return Math.random()*(max-min)+min}
+    function launchConfetti(count=100){
+      const pieces = [];
+      for(let i=0;i<count;i++){
+        pieces.push({x:random(0,canvas.width), y:-10, w:random(6,12), h:random(8,16), vx:random(-2,2), vy:random(2,6), r:random(0,360), vr:random(-6,6), color:`hsl(${~~random(0,360)},70%,60%)`});
+      }
+      let t=0;
+      const id = setInterval(()=>{
+        t+=1; cctx.clearRect(0,0,canvas.width,canvas.height);
+        for(const p of pieces){ p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.r += p.vr; cctx.save(); cctx.translate(p.x,p.y); cctx.rotate(p.r*Math.PI/180); cctx.fillStyle = p.color; cctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); cctx.restore(); }
+        if(t>120){ clearInterval(id); cctx.clearRect(0,0,canvas.width,canvas.height);} 
+      },16);
+    }
+
+    function typeWrite(targetEl, text, speed=28, cb){
+      targetEl.textContent = '';
+      let i=0; const id = setInterval(()=>{ targetEl.textContent += text.charAt(i); i++; if(i>=text.length){ clearInterval(id); if(cb) cb(); } }, speed);
+    }
+
+    sendBtn.addEventListener('click', ()=>{
+      heart.classList.remove('showHeart');
+      typeWrite(tw, 'Fiza, I’m truly sorry for all the past mistakes. I know I hurt you, and I never want to repeat that. I miss you and I hope you can forgive me.',26,()=>{
+        heart.classList.add('showHeart');
+        launchConfetti();
+      });
+    });
+  </script>
+</body>
+</html>
