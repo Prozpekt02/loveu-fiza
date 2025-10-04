@@ -3,118 +3,173 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sorry Fiza — Interactive Card</title>
+  <title>Our First Anniversary ❤️</title>
   <style>
-    :root{--bg:#0f172a;--card:#0b1220;--accent:#ff6b6b;--soft:#94a3b8}
-    *{box-sizing:border-box;font-family:Inter,system-ui,Arial;margin:0}
-    html,body{height:100%;background:linear-gradient(180deg,var(--bg) 0%, #071226 100%);color:#e6eef8}
-    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-    .card{width:100%;max-width:760px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:18px;padding:28px;box-shadow:0 10px 30px rgba(2,6,23,0.6);position:relative;overflow:hidden}
-    header{display:flex;gap:16px;align-items:center}
-    .logo{width:62px;height:62px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#fca5a5);display:flex;align-items:center;justify-content:center;font-weight:700}
-    h1{font-size:20px;margin-bottom:6px}
-    p.lead{color:var(--soft);margin-bottom:14px}
+    :root{
+      --bg:#FFF6F9;
+      --card:#ffffff;
+      --accent:#ff6b9a;
+      --muted:#7a7a7a;
+      --glass: rgba(255,255,255,0.6);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: radial-gradient(circle at 10% 10%, #fff1f6 0%, var(--bg) 30%), linear-gradient(180deg,#ffeef6 0%, #fff6f9 100%);
+      color:#222; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      min-height:100vh; display:flex; align-items:center; justify-content:center; padding:30px;
+    }
+    .stage{width:100%; max-width:980px}
+    header{display:flex; gap:20px; align-items:center}
+    .title{
+      background:linear-gradient(90deg,var(--accent),#ffb3d1); -webkit-background-clip:text; background-clip:text;
+      -webkit-text-fill-color:transparent; font-size:34px; font-weight:700; margin:0
+    }
+    .subtitle{color:var(--muted); margin:0}
 
-    .grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
-    @media (max-width:880px){.grid{grid-template-columns:1fr;}.preview{order:-1}}
+    .card{background:var(--card); border-radius:20px; padding:26px; margin-top:18px; box-shadow:0 8px 30px rgba(250,120,160,0.12); backdrop-filter: blur(6px);}
 
-    .compose{background:rgba(255,255,255,0.02);padding:16px;border-radius:12px}
-    label{display:block;font-size:13px;color:var(--soft);margin-bottom:6px}
-    input[type=text],textarea{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit;outline:none}
-    textarea{min-height:120px;resize:vertical}
-    .row{display:flex;gap:10px;margin-top:12px}
-    button{cursor:pointer;border:0;padding:10px 12px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#ff8fab);color:#061421;font-weight:700}
-    .muted{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--soft)}
+    .grid{display:grid; grid-template-columns: 1fr 380px; gap:20px}
 
-    .preview{padding:22px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
-    .card-face{width:100%;height:260px;border-radius:12px;background:linear-gradient(180deg,#071733 0%, #08263b 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;position:relative}
-    .typewriter{font-size:20px;text-align:center;max-width:90%}
-    .heart{font-size:44px;color:var(--accent);opacity:0;transform:scale(.6);transition:all .45s ease}
+    .left{padding:8px}
+    .right{display:flex; flex-direction:column; gap:16px}
 
-    .small{font-size:12px;color:var(--soft)}
-    .actions{display:flex;gap:8px}
+    .photo-slot{position:relative; border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#fff,#fff8fb); border:1px solid rgba(255,120,150,0.08); min-height:220px; display:flex; align-items:center; justify-content:center; flex-direction:column;}
+    .photo-slot img{width:100%; height:100%; object-fit:cover; display:block}
+    .photo-caption{position:absolute; left:12px; bottom:12px; background:var(--glass); padding:8px 12px; border-radius:999px; font-weight:600}
 
-    #confetti{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
+    .controls{display:flex; gap:8px; flex-wrap:wrap}
+    .controls input[type=file]{display:none}
+    .btn{padding:10px 12px; border-radius:10px; border:0; cursor:pointer; font-weight:600}
+    .btn-pick{background:#fff; box-shadow:0 4px 14px rgba(0,0,0,0.06)}
+    .btn-action{background:linear-gradient(90deg,var(--accent),#ff8fb1); color:white}
 
-    footer{margin-top:14px;text-align:center;color:var(--soft);font-size:13px}
+    .memories{display:grid; grid-template-columns: repeat(2,1fr); gap:12px}
+    .mem-card{padding:12px; border-radius:12px; background:linear-gradient(180deg,#fff,#fffafc); min-height:92px; display:flex; flex-direction:column; justify-content:center}
+
+    .reveal{margin-top:10px; padding:18px; border-radius:12px; background:linear-gradient(90deg,#fff7fb,#fff9f9); text-align:center}
+    .reveal .message{font-size:18px; font-weight:700; margin-bottom:10px}
+    .small{color:var(--muted); font-size:13px}
+
+    footer{margin-top:16px; text-align:center; color:var(--muted); font-size:13px}
+
+    /* heart animation */
+    .hearts{position:fixed; inset:0; pointer-events:none}
+    .heart{position:absolute; width:16px; height:16px; transform:translate(-50%,-50%); opacity:0;}
+    .heart:before,.heart:after{content:""; position:absolute; width:10px; height:16px; background:var(--accent); border-radius:10px 10px 0 0}
+    .heart:before{left:6px; transform:rotate(-45deg)}
+    .heart:after{left:-0px; transform:rotate(45deg)}
+
+    @media (max-width:880px){.grid{grid-template-columns:1fr;}.right{order:2}.left{order:1}}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card" role="application">
-      <header>
-        <div class="logo">❤</div>
-        <div>
-          <h1>Fiza, I’m Sorry</h1>
-          <p class="lead">Press <strong>Send Love</strong> to see your little message come alive with hearts and confetti.</p>
-        </div>
-      </header>
+  <div class="hearts" id="hearts"></div>
+  <div class="stage">
+    <header>
+      <div>
+        <h1 class="title">Happy 1st Anniversary ❤️</h1>
+        <p class="subtitle">A little gift for us — with our moments together</p>
+      </div>
+      <div style="margin-left:auto">
+        <button class="btn btn-action" id="playBtn">Play Song ▶</button>
+      </div>
+    </header>
 
-      <div class="grid" style="margin-top:18px">
-        <div class="compose">
-          <label for="to">To</label>
-          <input id="to" type="text" value="Fiza" readonly>
-
-          <label style="margin-top:10px" for="msg">Message</label>
-          <textarea id="msg" readonly>Fiza, I’m truly sorry for all the past mistakes. I know I hurt you, and I never want to repeat that. I miss you and I hope you can forgive me.</textarea>
-
-          <div class="row">
-            <button id="send">Send Love</button>
+    <div class="card">
+      <div class="grid">
+        <div class="left">
+          <div class="photo-slot">
+            <img src="bdb6d7fd-67b7-4c18-8405-96443f81d110.jpg" alt="Our First Meet">
+            <div class="photo-caption">Our First Meet</div>
           </div>
-        </div>
 
-        <div class="preview">
-          <div class="card-face" id="face">
-            <canvas id="confetti"></canvas>
-            <div style="z-index:2">
-              <div class="typewriter" id="tw">Hey Fiza —</div>
-              <div class="heart" id="heart">❤</div>
+          <div style="height:12px"></div>
+
+          <div class="photo-slot">
+            <img src="fb335fd8-b025-4277-9d40-ccd0687c0a23.jpg" alt="Best Memory">
+            <div class="photo-caption">Best Memory</div>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="memories">
+            <div class="mem-card">
+              <div style="font-weight:700">Forever Us</div>
+              <div class="small">A space where our love keeps growing 💕</div>
+            </div>
+            <div class="mem-card">
+              <div style="font-weight:700">To Many More</div>
+              <div class="small">Our journey has just begun ✨</div>
             </div>
           </div>
-          <div style="width:100%;display:flex;justify-content:space-between;align-items:center">
-            <div class="small">Preview</div>
+
+          <div style="height:12px"></div>
+
+          <div class="reveal">
+            <div class="message" id="typeWriter">Click "Reveal" for a surprise</div>
+            <div><button class="btn btn-action" id="revealBtn">Reveal ♥</button> <button class="btn btn-pick" id="confettiBtn">Confetti</button></div>
           </div>
         </div>
+
+        <div class="right">
+          <div style="font-weight:700">You are my always & forever 💖</div>
+          <p class="small">From our very first meet till now, you’ve been my happiest memory and my future dream. I love you endlessly.</p>
+        </div>
       </div>
-      <footer>Sent with love and honesty ❤️</footer>
+
+      <footer>Made with ♥ for our 1st anniversary</footer>
     </div>
   </div>
 
+  <audio id="bgAudio" loop preload="auto">
+    <source src="romantic.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
-    const tw = document.getElementById('tw');
-    const heart = document.getElementById('heart');
-    const sendBtn = document.getElementById('send');
-    const canvas = document.getElementById('confetti');
-    const cctx = canvas.getContext('2d');
-    function resizeCanvas(){canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight}
-    window.addEventListener('resize', resizeCanvas); resizeCanvas();
-
-    function random(min,max){return Math.random()*(max-min)+min}
-    function launchConfetti(count=100){
-      const pieces = [];
-      for(let i=0;i<count;i++){
-        pieces.push({x:random(0,canvas.width), y:-10, w:random(6,12), h:random(8,16), vx:random(-2,2), vy:random(2,6), r:random(0,360), vr:random(-6,6), color:`hsl(${~~random(0,360)},70%,60%)`});
-      }
-      let t=0;
-      const id = setInterval(()=>{
-        t+=1; cctx.clearRect(0,0,canvas.width,canvas.height);
-        for(const p of pieces){ p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.r += p.vr; cctx.save(); cctx.translate(p.x,p.y); cctx.rotate(p.r*Math.PI/180); cctx.fillStyle = p.color; cctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); cctx.restore(); }
-        if(t>120){ clearInterval(id); cctx.clearRect(0,0,canvas.width,canvas.height);} 
-      },16);
-    }
-
-    function typeWrite(targetEl, text, speed=28, cb){
-      targetEl.textContent = '';
-      let i=0; const id = setInterval(()=>{ targetEl.textContent += text.charAt(i); i++; if(i>=text.length){ clearInterval(id); if(cb) cb(); } }, speed);
-    }
-
-    sendBtn.addEventListener('click', ()=>{
-      heart.classList.remove('showHeart');
-      typeWrite(tw, 'Fiza, I’m truly sorry for all the past mistakes. I know I hurt you, and I never want to repeat that. I miss you and I hope you can forgive me.',26,()=>{
-        heart.classList.add('showHeart');
-        launchConfetti();
-      });
+    const bgAudio = document.getElementById('bgAudio');
+    const playBtn = document.getElementById('playBtn');
+    playBtn.addEventListener('click', ()=>{
+      if(bgAudio.paused){ bgAudio.play(); playBtn.textContent='Pause ❚❚' } else { bgAudio.pause(); playBtn.textContent='Play Song ▶' }
     });
+
+    const revealBtn = document.getElementById('revealBtn');
+    const typeWriter = document.getElementById('typeWriter');
+    const messages = [
+      "One year down, forever to go. I love you ❤️",
+      "You’re my best memory and my favorite future ✨",
+      "Happy 1st Anniversary to us 💕"
+    ];
+    let idx=0;
+    function typeText(text, el, cb){ el.textContent=''; let i=0; const t = setInterval(()=>{ el.textContent += text[i++]||''; if(i>text.length){ clearInterval(t); if(cb) cb(); } }, 35) }
+    revealBtn.addEventListener('click', ()=>{
+      typeText(messages[idx%messages.length], typeWriter); idx++;
+      spawnBurst();
+    });
+
+    function rand(min,max){return Math.random()*(max-min)+min}
+    const heartsEl = document.getElementById('hearts');
+    function spawnHeart(x,y){
+      const el = document.createElement('div'); el.className='heart'; heartsEl.appendChild(el);
+      el.style.left = x + 'px'; el.style.top = y + 'px';
+      el.style.opacity=1; el.style.transform='translate(-50%,-50%) scale(0.8)';
+      const dur = rand(1800,3000);
+      el.animate([
+        {transform:'translate(-50%,-50%) scale(0.8) translateY(0px)', opacity:1},
+        {transform:`translate(-50%,-50%) scale(1.6) translateY(-120px)`, opacity:0}
+      ], {duration:dur, easing:'cubic-bezier(.2,.8,.2,1)'});
+      setTimeout(()=> el.remove(), dur+50)
+    }
+    function spawnBurst(){
+      for(let i=0;i<14;i++){
+        const x = window.innerWidth/2 + rand(-180,180);
+        const y = window.innerHeight/2 + rand(-60,60);
+        setTimeout(()=> spawnHeart(x,y), i*40);
+      }
+    }
+    document.getElementById('confettiBtn').addEventListener('click', spawnBurst);
+
+    setTimeout(spawnBurst, 1200);
   </script>
 </body>
 </html>
